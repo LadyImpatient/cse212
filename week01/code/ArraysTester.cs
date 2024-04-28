@@ -59,10 +59,24 @@ public static class ArraysTester {
     private static void RotateListRight(List<int> data, int amount)
     {
         // TODO Problem 2 Start
-        // Check to make sure the amount is viable to use 
-        // Count the elements in the list
-        // Make list List<int> to store the elements that need to be rotated
-        // 
+        // ake sure the number is not less than 1 and not greater than the amount of units in the list
+        // make a list to store the elements that need to be rotated
+        // copy the amount elements from the original list to the temp list listed above. 
+        // shift the remaining elements in the original list to the right by the 'amount' position to allow the rotated elements to be recorded
+        // copy the elements from the temp list to the beginning of the original list
+
+        if (amount < 1)
+        {
+            amount =1;
+        }
+        else if (amount > data.Count)
+        {
+            amount %= data.Count;
+        }
+        List<int> rotateElements = new List<int>();
+        rotateElements.AddRange(data.GetRange(data.Count - amount, amount));
+        data.RemoveRange(data.Count - amount, amount);
+        data.InsertRange(0, rotateElements);
 
     }
 }
