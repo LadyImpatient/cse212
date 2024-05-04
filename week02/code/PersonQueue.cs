@@ -27,4 +27,4 @@ public class PersonQueue {
     public override string ToString() {
         return $"[{string.Join(", ", _queue)}]";
     }
-}
+} 
