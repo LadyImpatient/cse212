@@ -151,4 +151,4 @@ public class CustomerServiceSolution {
     public override string ToString() {
         return $"[size={_queue.Count} max_size={_maxSize} => " + String.Join(", ", _queue) + "]";
     }
-}
+} 

@@ -34,4 +34,4 @@ public static class ComplexStackSolution {
 
         return stack.Count == 0;
     }
-}
+} 
