@@ -13,7 +13,7 @@
         players.AddPerson("Bob", 2);
         players.AddPerson("Tim", 5);
         players.AddPerson("Sue", 3);
-        Console.WriteLine(players);    // This can be un-commented out for debug help
+        //Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
         // Defect(s) Found: There's no rotation between Persons to take turns
@@ -23,24 +23,25 @@
         // Test 2
         // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3)
         // After running 5 times, add George with 3 turns.  Run until the queue is empty.
-        // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, George, Sue, Tim, George, Tim, George
-        //Console.WriteLine("Test 2");
-        //players = new TakingTurnsQueue();
-        //players.AddPerson("Bob", 2);
-        //players.AddPerson("Tim", 5);
-        //players.AddPerson("Sue", 3);
-        //Console.WriteLine(players);
-        //for (int i = 0; i < 5; i++) {
-        //    Console.WriteLine(players.GetNextPerson());
-        //    players.AddPerson("George", 3);
-        //}
-         //Console.WriteLine(players);
-        //while (players.Length > 0)
-         //   players.GetNextPerson();
+        // Expected Result: Bob, Tim, Sue,/ Bob, Tim, Sue,/ Tim, George, Sue, /Tim, George, Tim, George
+        Console.WriteLine("Test 2");
+        players = new TakingTurnsQueue();
+        players.AddPerson("Bob", 2);
+        players.AddPerson("Tim", 5);
+        players.AddPerson("Sue", 3);
+        for (int i = 0; i < 5; i++) {
+            players.GetNextPerson();
+            // Console.WriteLine(players);
+        }
 
-        // Defect(s) Found: Displaying the list instead of the containers of the list.
+        players.AddPerson("George", 3);
+        // Console.WriteLine(players);
+        while (players.Length > 0)
+            players.GetNextPerson();
 
-        //Console.WriteLine("---------");
+        // Defect(s) Found: Gives Bob and Sue an extra turn. 
+
+        Console.WriteLine("---------");
 
         // Test 3
         // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
