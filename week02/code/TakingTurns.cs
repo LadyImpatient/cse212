@@ -47,19 +47,20 @@
         // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
         // Run 10 times.
         // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-        //Console.WriteLine("Test 3");
-        //players = new TakingTurnsQueue();
-        //players.AddPerson("Bob", 2);
-        //players.AddPerson("Tim", 0);
-        //players.AddPerson("Sue", 3);
-        // Console.WriteLine(players);
-        //for (int i = 0; i < 10; i++) {
-        //    players.GetNextPerson();
-            // Console.WriteLine(players);
-        //}
-        // Defect(s) Found: None
+        Console.WriteLine("Test 3");
+        players = new TakingTurnsQueue();
+        players.AddPerson("Bob", 2);
+        players.AddPerson("Tim", 0);
+        players.AddPerson("Sue", 3);
+        
+        Console.WriteLine(players);
+        for (int i = 0; i < 10; i++) {
+            players.GetNextPerson();
+            Console.WriteLine(players);
+        }
+        // Defect(s) Found: Displaying the addperson values as sring in the code output.
 
-        //Console.WriteLine("---------");
+        Console.WriteLine("---------");
 
          // Test 4
         // Scenario: Create a queue with the following people and turns: Tim (Forever), Sue (3)
