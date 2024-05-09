@@ -42,7 +42,6 @@ public class TakingTurnsQueue {
                 person.Turns -= 1;
             _people.Enqueue(person);}
         }
-    }
 
     public override string ToString() {
         string result = "";
