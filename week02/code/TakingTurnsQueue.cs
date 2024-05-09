@@ -34,21 +34,20 @@ public class TakingTurnsQueue {
             Console.WriteLine("No one in the queue.");
             return;
             }
-            Person person= _people.Dequeue();
-            Console.WriteLine(person.Name);
-        if (person.Turns>1) || person.Turns < 0 {
-            if (person.Turns > 0)
-                person.Turns -= 1;
+        Person person= _people.Dequeue();
+        Console.WriteLine(person.Name);
+
+        if (person.Turns > 0) {
+            person.Turns -= 1;
             _people.Enqueue(person);
-            }
         }
     }
 
     public override string ToString() {
-        StringBuilder sb = new StringBuilder();
+        string result = "";
         foreach (var person in _people) {
-            sb.Append($"({person.Name}:{person.Turns})");
+            result += $"({person.Name}:{person.Turns})";
         }
-        return sb.ToString().TrimEnd(' ', ' , ');
+        return result.TrimEnd(',');
     }
 }
