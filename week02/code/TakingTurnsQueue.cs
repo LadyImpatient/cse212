@@ -44,10 +44,10 @@ public class TakingTurnsQueue {
         }
 
     public override string ToString() {
-        string result = "Queue";
+        string result = "";
         foreach (var person in _people) {
             result += $"({person.Name}:{person.Turns})";
         }
-        return result.TrimEnd(',', ' ');
+        return result.TrimEnd(',');
     }
 }

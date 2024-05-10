@@ -31,11 +31,9 @@
         players.AddPerson("Sue", 3);
         for (int i = 0; i < 5; i++) {
             players.GetNextPerson();
-            // Console.WriteLine(players);
         }
 
         players.AddPerson("George", 3);
-        // Console.WriteLine(players);
         while (players.Length > 0)
             players.GetNextPerson();
 
@@ -53,12 +51,11 @@
         players.AddPerson("Tim", 0);
         players.AddPerson("Sue", 3);
         
-        Console.WriteLine(players);
         for (int i = 0; i < 10; i++) {
             players.GetNextPerson();
-            Console.WriteLine(players);
+            //Console.WriteLine(players);
         }
-        // Defect(s) Found: Displaying the addperson values as sring in the code output.
+        // Defect(s) Found: Displaying the addperson values as sring in the code output. Too many writelines for players
 
         Console.WriteLine("---------");
 
@@ -66,25 +63,23 @@
         // Scenario: Create a queue with the following people and turns: Tim (Forever), Sue (3)
         // Run 10 times.
         // Expected Result: Tim, Sue, Tim, Sue, Tim, Sue, Tim, Tim, Tim, Tim
-        //Console.WriteLine("Test 4");
-        //players = new TakingTurnsQueue();
-        //players.AddPerson("Tim", -3);
-        //players.AddPerson("Sue", 3);
-        // Console.WriteLine(players);
-        //for (int i = 0; i < 10; i++) {
-        //    players.GetNextPerson();
-            // Console.WriteLine(players);
-        //}
+        Console.WriteLine("Test 4");
+        players = new TakingTurnsQueue();
+        players.AddPerson("Tim", -3);
+        players.AddPerson("Sue", 3);
+        for (int i = 0; i < 10; i++) {
+            players.GetNextPerson();
+        }
         // Defect(s) Found: None
 
-        //Console.WriteLine("---------");
+        Console.WriteLine("---------");
 
         // Test 5
         // Scenario: Try to get the next person from an empty queue
         // Expected Result: Error message should be displayed
-        //Console.WriteLine("Test 5");
-        //players = new TakingTurnsQueue();
-        //players.GetNextPerson();
+        Console.WriteLine("Test 5");
+        players = new TakingTurnsQueue();
+        players.GetNextPerson();
         // Defect(s) Found: None
     }
 }
