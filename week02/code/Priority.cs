@@ -8,20 +8,33 @@
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Queue two things with different priority then dequeue. 
+        // Expected Result: Higher priority item will be dequeued first
         Console.WriteLine("Test 1");
+        priorityQueue.Enqueue("Item 1", 3);
+        priorityQueue.Enqueue("Item 2", 1);
+        Console.WriteLine($"Queue after enqueue: {priorityQueue}");
+        Console.WriteLine($"Dequeued item: {priorityQueue.Dequeue()}");
+        Console.WriteLine($"Queue after dequeue: {priorityQueue}");
 
-        // Defect(s) Found: 
+        Console.WriteLine("---------");
+
+        // Defect(s) Found: doesn't dequeue item with highest priority
 
         Console.WriteLine("---------");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Enqueue three items with the same priority then dequeue.
+        // Expected Result: The item enqueued first should be dequeued first.
         Console.WriteLine("Test 2");
+        priorityQueue.Enqueue("Item 3", 2);
+        priorityQueue.Enqueue("Item 4", 2);
+        priorityQueue.Enqueue("Item 5", 2);
+        Console.WriteLine($"Queue after enqueue: {priorityQueue}");
+        Console.WriteLine($"Dequeued item: {priorityQueue.Dequeue()}"); // Defect: Does not properly dequeue the item with the highest priority
+        Console.WriteLine($"Queue after dequeue: {priorityQueue}");
 
-        // Defect(s) Found: 
+        // Defect(s) Found: didn't dequeue first item
 
         Console.WriteLine("---------");
 
