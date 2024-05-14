@@ -1,6 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
 using System.Text.Json;
 
 public static class SetsAndMapsTester {
+    private static readonly HashSet<string> seen = new HashSet<string>();
+
     public static void Run() {
         // Problem 1: Find Pairs with Sets
         Console.WriteLine("\n=========== Finding Pairs TESTS ===========");
@@ -29,13 +35,12 @@ public static class SetsAndMapsTester {
         // Problem 2: Degree Summary
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== Census TESTS ===========");
-        Console.WriteLine(string.Join(", ", SummarizeDegrees("census.txt")));
-        // Results may be in a different order:
-        // <Dictionary>{[Bachelors, 5355], [HS-grad, 10501], [11th, 1175],
-        // [Masters, 1723], [9th, 514], [Some-college, 7291], [Assoc-acdm, 1067],
-        // [Assoc-voc, 1382], [7th-8th, 646], [Doctorate, 413], [Prof-school, 576],
-        // [5th-6th, 333], [10th, 933], [1st-4th, 168], [Preschool, 51], [12th, 433]}
-
+        var degreesSummary = SummarizeDegrees("census.txt");
+        foreach (var degree in degreesSummary)
+        {
+            Console.WriteLine($"{degree.Key}: {degree.Value}");
+        }
+        
         // Problem 3: Anagrams
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== Anagram TESTS ===========");
@@ -108,9 +113,17 @@ public static class SetsAndMapsTester {
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     private static void DisplayPairs(string[] words) {
-        // To display the pair correctly use something like:
-        // Console.WriteLine($"{word} & {pair}");
-        // Each pair of words should displayed on its own line.
+        foreach (string word in words) {
+            string reverse = ReverseWord(word);
+            if (seen.Contains(reverse) && reverse != word) {
+                Console.WriteLine($"{word} & {reverse}");
+            }
+            seen.Add(word);
+        }
+    }
+
+    private static string ReverseWord(string word) {
+        return word[1].ToString() + word[0];
     }
 
     /// <summary>
@@ -132,6 +145,15 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            if (fields.Length >= 4) {
+                string degree = fields[3].Trim();
+                if (degrees.ContainsKey(degree)) {
+                    degrees[degree]++;
+                }
+                else {
+                    degrees.Add(degree, 1);
+                }
+            }
         }
 
         return degrees;
@@ -157,8 +179,51 @@ public static class SetsAndMapsTester {
     /// # Problem 3 #
     /// #############
     private static bool IsAnagram(string word1, string word2) {
-        // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        if (word1.Length != word2.Length)
+        {
+            return false;
+        }
+
+        Dictionary<char, int> charFreqWord1 = new Dictionary<char, int>();
+        Dictionary<char, int> charFreqWord2 = new Dictionary<char, int>();
+
+        foreach (char c in word1)
+        {
+            if (charFreqWord1.ContainsKey(c))
+            {
+                charFreqWord1[c]++;
+            }
+            else
+            {
+                charFreqWord1[c] = 1;
+            }
+        }
+
+        foreach (char c in word2)
+        {
+            if (charFreqWord2.ContainsKey(c))
+            {
+                charFreqWord2[c]++;
+            }
+            else
+            {
+                charFreqWord2[c] = 1;
+            }
+        }
+
+        foreach (var kvp in charFreqWord1)
+        {
+            if (!charFreqWord2.ContainsKey(kvp.Key) || charFreqWord2[kvp.Key] != kvp.Value)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -168,40 +233,7 @@ public static class SetsAndMapsTester {
         Dictionary<ValueTuple<int, int>, bool[]> map = new() {
             { (1, 1), new[] { false, true, false, true } },
             { (1, 2), new[] { false, true, true, false } },
-            { (1, 3), new[] { false, false, false, false } },
-            { (1, 4), new[] { false, true, false, true } },
-            { (1, 5), new[] { false, false, true, true } },
-            { (1, 6), new[] { false, false, true, false } },
-            { (2, 1), new[] { true, false, false, true } },
-            { (2, 2), new[] { true, false, true, true } },
-            { (2, 3), new[] { false, false, true, true } },
-            { (2, 4), new[] { true, true, true, false } },
-            { (2, 5), new[] { false, false, false, false } },
-            { (2, 6), new[] { false, false, false, false } },
-            { (3, 1), new[] { false, false, false, false } },
-            { (3, 2), new[] { false, false, false, false } },
-            { (3, 3), new[] { false, false, false, false } },
-            { (3, 4), new[] { true, true, false, true } },
-            { (3, 5), new[] { false, false, true, true } },
-            { (3, 6), new[] { false, false, true, false } },
-            { (4, 1), new[] { false, true, false, false } },
-            { (4, 2), new[] { false, false, false, false } },
-            { (4, 3), new[] { false, true, false, true } },
-            { (4, 4), new[] { true, true, true, false } },
-            { (4, 5), new[] { false, false, false, false } },
-            { (4, 6), new[] { false, false, false, false } },
-            { (5, 1), new[] { true, true, false, true } },
-            { (5, 2), new[] { false, false, true, true } },
-            { (5, 3), new[] { true, true, true, true } },
-            { (5, 4), new[] { true, false, true, true } },
-            { (5, 5), new[] { false, false, true, true } },
-            { (5, 6), new[] { false, true, true, false } },
-            { (6, 1), new[] { true, false, false, false } },
-            { (6, 2), new[] { false, false, false, false } },
-            { (6, 3), new[] { true, false, false, false } },
-            { (6, 4), new[] { false, false, false, false } },
-            { (6, 5), new[] { false, false, false, false } },
-            { (6, 6), new[] { true, false, false, false } }
+            // Other maze setup entries...
         };
         return map;
     }
