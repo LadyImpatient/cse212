@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Collections.Generic;
 
 public class FeatureCollection {
     // Todo Earthquake Problem - ADD YOUR CODE HERE
@@ -6,7 +7,7 @@ public class FeatureCollection {
 } 
 
 public class Feature {
-    public RefreshProperties Properties { get; set; }
+    public Properties Properties { get; set; }
 }
 
 public class Properties {
