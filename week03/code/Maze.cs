@@ -29,7 +29,16 @@ public class Maze {
     /// can't move, then display "Can't go that way!"
     /// </summary>
     public void MoveLeft() {
-        // FILL IN CODE
+        int newX = _currX +1;
+        int newY = _currY;
+        if (_mazeMap.ContainsKey((newX, newY)) && _mazeMap[(newX, newY)][0]) {
+            _currX = newX;
+            _currY = newY;
+            Console.WriteLine($"Moved right to (x={_currX}, y={_currY})");
+        }
+        else {
+            Console.WriteLine("Can't go right! ");
+        }
     }
 
     /// <summary>
@@ -37,7 +46,15 @@ public class Maze {
     /// can't move, then display "Can't go that way!"
     /// </summary>
     public void MoveRight() {
-        // FILL IN CODE
+        int newX = _currX;
+        int newY = _currY - 1;
+        if (_mazeMap.ContainsKey((newX, newY)) && _mazeMap[(newX, newY)][3]) {
+            _currX = newX;
+            _currY = newY;
+            Console.WriteLine($"Moved up to (x={_currX}, y={_currY})");
+        } else {
+            Console.WriteLine("Can't go up!");
+        }
     }
 
     /// <summary>
@@ -45,7 +62,15 @@ public class Maze {
     /// can't move, then display "Can't go that way!"
     /// </summary>
     public void MoveUp() {
-        // FILL IN CODE
+        int newX = _currX;
+        int newY = _currY - 1;
+        if (_mazeMap.ContainsKey((newX, newY)) && _mazeMap[(newX, newY)][3]) {
+            _currX = newX;
+            _currY = newY;
+            Console.WriteLine($"Moved up to (x={_currX}, y={_currY})");
+        } else {
+            Console.WriteLine("Can't go up!");
+        }
     }
 
     /// <summary>
@@ -53,7 +78,15 @@ public class Maze {
     /// can't move, then display "Can't go that way!"
     /// </summary>
     public void MoveDown() {
-        // FILL IN CODE
+        int newX = _currX;
+        int newY = _currY + 1;
+        if (_mazeMap.ContainsKey((newX, newY)) && _mazeMap[(newX, newY)][2]) {
+            _currX = newX;
+            _currY = newY;
+            Console.WriteLine($"Moved down to (x={_currX}, y={_currY})");
+        } else {
+            Console.WriteLine("Can't go down!");
+        }
     }
 
     public void ShowStatus() {
