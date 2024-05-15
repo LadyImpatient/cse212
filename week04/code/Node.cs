@@ -6,4 +6,4 @@
     public Node(int data) {
         this.Data = data;
     }
-}
+} 

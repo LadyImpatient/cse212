@@ -12,7 +12,7 @@ public class LinkedList : IEnumerable<int> {
         Node newNode = new Node(value);
         // If the list is empty, then point both head and tail to the new node.
         if (_head is null) {
-            _head = newNode;
+            _head = newNode; 
             _tail = newNode;
         }
         // If the list is not empty, then only head will be affected.
