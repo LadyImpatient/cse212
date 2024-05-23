@@ -5,11 +5,13 @@ public static class RecursionTester {
     public static void Run() {
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== PROBLEM 1 TESTS ===========");
+
         Console.WriteLine(SumSquaresRecursive(10)); // 385
         Console.WriteLine(SumSquaresRecursive(100)); // 338350
 
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== PROBLEM 2 TESTS ===========");
+
         PermutationsChoose("ABCD", 3);
         // Expected Result (order may be different):
         // ABC
@@ -67,7 +69,27 @@ public static class RecursionTester {
         Console.WriteLine(CountWaysToClimb(20)); // 121415
         // Uncomment out the test below after implementing memoization.  It won't work without it.
         // TODO Problem 3
-        // Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
+
+        static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null) {
+             if (remember == null) {
+            remember = new Dictionary<int, decimal>();
+            }
+
+            if (s == 0) return 0;
+            if (s == 1) return 1;
+            if (s == 2) return 2;
+            if (s == 3) return 4;
+
+            if (remember.ContainsKey(s)) {
+                return remember[s];
+            }
+
+            decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+            remember[s] = ways;
+            return ways;
+        }
+
+        Console.WriteLine(CountWaysToClimb(100));  // 180396380815100901214157639
 
         // Sample Test Cases (may not be comprehensive) 
         Console.WriteLine("\n=========== PROBLEM 4 TESTS ===========");
@@ -147,7 +169,11 @@ public static class RecursionTester {
     /// </summary>
     public static int SumSquaresRecursive(int n) {
         // TODO Start Problem 1
-        return 0;
+
+            if (n <= 0) {
+            return 0;
+            }
+        return n * n + SumSquaresRecursive(n - 1);
     }
 
     /// <summary>
@@ -169,9 +195,16 @@ public static class RecursionTester {
     /// You can assume that the size specified is always valid (between 1 
     /// and the length of the letters list).
     /// </summary>
-    public static void PermutationsChoose(string letters, int size, string word = "") {
-        // TODO Start Problem 2
-    }
+        static void PermutationsChoose(string letters, int size, string word = "") {
+            if (word.Length == size) {
+                Console.WriteLine(word);
+                return;
+            }
+            
+            for (int i = 0; i < letters.Length; i++) {
+                PermutationsChoose(letters.Substring(0, i) + letters.Substring(i + 1), size, word + letters[i]);
+            }
+        }
 
     /// <summary>
     /// #############
@@ -249,6 +282,14 @@ public static class RecursionTester {
     /// </summary>
     public static void WildcardBinary(string pattern) {
         // TODO Start Problem 4
+        int index = pattern.IndexOf('*');
+            if (index == -1) {
+                Console.WriteLine(pattern);
+                return;
+            }
+            
+            WildcardBinary(pattern.Substring(0, index) + "0" + pattern.Substring(index + 1));
+            WildcardBinary(pattern.Substring(0, index) + "1" + pattern.Substring(index + 1));
     }
 
     /// <summary>
@@ -258,14 +299,51 @@ public static class RecursionTester {
     public static void SolveMaze(Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null) {
         // If this is the first time running the function, then we need
         // to initialize the currPath list.
-        if (currPath == null)
+        if (currPath == null) {
             currPath = new List<ValueTuple<int, int>>();
-
+        }
         // currPath.Add((1,2)); // Use this syntax to add to the current path
 
         // TODO Start Problem 5
-        // ADD CODE HERE
+
+        if (!IsValidMove(maze, x, y, currPath)) {
+        return;
+        }
+
+        currPath.Add((x, y));
+
+        if (IsEnd(maze, x, y)) {
+            Console.WriteLine(currPath.AsString());
+            currPath.RemoveAt(currPath.Count - 1);
+            return;
+        }
+
+        SolveMaze(maze, x + 1, y, currPath);
+        SolveMaze(maze, x - 1, y, currPath);
+        SolveMaze(maze, x, y + 1, currPath);
+        SolveMaze(maze, x, y - 1, currPath);
+
+        currPath.RemoveAt(currPath.Count - 1);
+        }
+
+        public static bool IsValidMove(Maze maze, int x, int y, List<ValueTuple<int, int>> currPath) {
+        if (x < 0 || y < 0 || x >= maze.Width || y >= maze.Height) {
+            return false;
+        }
+
+        if (currPath.Contains((x, y))) {
+            return false;
+        }
+
+        int position = y * maze.Width + x;
+        return maze.Data[position] != 0;
+        }
+
+        public static bool IsEnd(Maze maze, int x, int y) {
+        int position = y * maze.Width + x;
+        return maze.Data[position] == 2;
+        }
+        
 
         // Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
-    }
 }
